@@ -1,0 +1,6 @@
+{
+  "name": "APAAR Student Registry & Employer Verification Portal",
+  "description": "One Nation, One Student ID portal with DPDP-compliant student consent dashboard, AICTE and DigiLocker digital signature verification, and immutable audit trails.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
