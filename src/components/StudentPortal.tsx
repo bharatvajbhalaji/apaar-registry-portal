@@ -674,7 +674,7 @@ export const StudentPortal: React.FC<StudentPortalProps> = ({
                 <div>
                   <span className="font-semibold text-slate-200 block">Require Aadhaar OTP for Consent Approval</span>
                   <span className="text-slate-400 text-[11px]">
-                    Prevents accidental clicks by requiring a 6-digit OTP sent to your registered mobile number (registered mobile).
+                    Prevents accidental clicks by requiring a 6-digit OTP sent to your registered mobile number.
                   </span>
                 </div>
               </label>
@@ -738,7 +738,7 @@ export const StudentPortal: React.FC<StudentPortalProps> = ({
                     onChange={e => setLocalPrefs(prev => ({ ...prev, notifyViaSMS: e.target.checked }))}
                     className="accent-amber-500 rounded"
                   />
-                  <span className="text-slate-300">Instant SMS notification on mobile (registered mobile)</span>
+                  <span className="text-slate-300">Instant SMS notification to your registered mobile</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
