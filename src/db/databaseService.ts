@@ -581,9 +581,24 @@ export async function seedDemoDataIfEmpty(): Promise<boolean> {
       .filter(a => a.role === 'EMPLOYER')
       .map(a => [a.organization, a.id])
   );
-  for (const req of INITIAL_VERIFICATION_REQUESTS) {
+  // Sample requests get dates relative to now, so open ones are never already expired on first run.
+  const now = Date.now();
+  const HOUR = 3600 * 1000;
+  for (const [i, req] of INITIAL_VERIFICATION_REQUESTS.entries()) {
     const employerUid = employerByOrg.get(req.employerName);
-    if (employerUid) await insertRequest(req, employerUid);
+    if (!employerUid) continue;
+    const stillOpen = ['PENDING_STUDENT_CONSENT', 'CONSENT_GRANTED', 'VERIFYING', 'VERIFIED'].includes(req.status);
+    const requestedAt = now - (2 + i * 24) * HOUR;
+    await insertRequest(
+      {
+        ...req,
+        requestedAt: new Date(requestedAt).toISOString(),
+        consentGrantedAt: req.consentGrantedAt ? new Date(requestedAt + HOUR).toISOString() : undefined,
+        consentRevokedAt: req.consentRevokedAt ? new Date(requestedAt + 2 * HOUR).toISOString() : undefined,
+        consentExpiresAt: new Date(stillOpen ? now + 72 * HOUR : requestedAt + 24 * HOUR).toISOString(),
+      },
+      employerUid
+    );
   }
   return true;
 }
